@@ -1,0 +1,28 @@
+﻿@model IEnumerable<EventScheduler.Models.Event>
+
+<h2 class="mt-4">Event List</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ev in Model)
+        {
+            <tr>
+                <td>@ev.Title</td>
+                <td>@ev.Date.ToShortDateString()</td>
+                <td>
+                    <a class="btn btn-warning btn-sm" href="@Url.Action("Edit", new { id = ev.Id })">Edit</a>
+                    <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", new { id = ev.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-primary" href="@Url.Action("Create")">Add New Event</a>
