@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.Reflection.Metadata.Ecma335;
 
 namespace EventScheduler.Models
 {
@@ -15,7 +16,7 @@ namespace EventScheduler.Models
         {
             _context = context;
         }
-     
+        public Event() { }
         void IEvent.CreateEvent(Event _event)
         {
             _context.Add(_event);
@@ -41,6 +42,11 @@ namespace EventScheduler.Models
         List<Event> IEvent.GetEvents()
         {
            return _context.Events.ToList();
+        }
+
+        Event? IEvent.GetEvent(int Id)
+        {
+            return (_context.Events.FirstOrDefault(ev => ev.Id == Id));
         }
     }
 }

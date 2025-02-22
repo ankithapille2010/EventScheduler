@@ -1,0 +1,11 @@
+﻿@model EventScheduler.Models.Event
+<form asp-action="Edit" method="post">
+	<div>
+		<h2>Editing the event for @Model.Title</h2>
+		<label asp-for="@Model.Title"></label>
+		<input type="text" asp-for="@Model.Title">
+		<label asp-for="@Model.Date"></label>
+		<input type="date" asp-for="@Model.Date">
+		<button type="submit" class="btn btn-primary"> Save Changes</button>
+	</div>
+</form>

@@ -1,0 +1,19 @@
+﻿@model EventScheduler.Models.Event 
+
+<h1>Create New Event</h1>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label for="Title" class="form-label">Event Name</label>
+        <input type="text" asp-for="Title"/>
+    </div>
+
+    <div class="mb-3">
+        <label for="Date" class="form-label">Event Date</label>
+        <input type="date" asp-for="Date" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Event</button>
+    <a href="@Url.Action("Index", "Event")" class="btn btn-secondary">Back to List</a>
+
+</form>

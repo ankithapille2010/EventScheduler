@@ -6,11 +6,16 @@
         <th>ID</th>
         <th>Name</th>
     </tr>
-    @foreach (var emp in Model)
+    @foreach (var _event in Model)
     {
         <tr>
-            <td>@emp.Title</td>
-            <td>@emp.Date</td>
+            <td>@_event.Title</td>
+            <td>@_event.Date</td>
+            <td>
+                <a href="@Url.Action("Edit", "Event", new { id = _event.Id })" class="btn btn-warning btn-sm">Edit</a>
+                <a href="@Url.Action("Delete", "Event", new { id = _event.Id })" class="btn btn-danger btn-sm">Delete</a>
+            </td>
         </tr>
     }
 </table>
+<a href="@Url.Action("Create", "Event")" class="btn btn-secondary">Create New Event</a>
