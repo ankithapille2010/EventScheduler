@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EventScheduler.Models
+namespace EventScheduler.Models.Authorization
 {
     public class LoginViewModel
     {

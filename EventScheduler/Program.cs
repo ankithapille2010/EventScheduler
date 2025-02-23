@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IEvent, Event>();
+builder.Services.AddScoped<IEventRegistration, EventRegistrationRegistry>();
 
 // Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()

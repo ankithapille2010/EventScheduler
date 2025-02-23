@@ -10,5 +10,6 @@ namespace EventScheduler.Models
         : base(options) { }
 
         public DbSet<Event> Events { get; set; }
+        public DbSet<EventRegistration1> EventRegistrations { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using EventScheduler.Models;
+﻿using EventScheduler.Models.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

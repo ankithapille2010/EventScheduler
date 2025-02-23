@@ -1,0 +1,16 @@
+﻿@model List<EventScheduler.Models.Event>
+
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+    </tr>
+    @foreach (var _event in Model)
+    {
+        <tr>
+            <td>@_event.Id</td>
+            <td>@_event.Date</td>
+        </tr>
+    }
+</table>

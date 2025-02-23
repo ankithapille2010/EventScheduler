@@ -1,6 +1,8 @@
 ﻿@model List<EventScheduler.Models.Event>
 
 <h2>Employee List</h2>
+<a href="@Url.Action("MyEvents", "Event")" class="btn btn-danger btn-sm">My Events</a>
+
 <table>
     <tr>
         <th>ID</th>
@@ -14,6 +16,10 @@
             <td>
                 <a href="@Url.Action("Edit", "Event", new { id = _event.Id })" class="btn btn-warning btn-sm">Edit</a>
                 <a href="@Url.Action("Delete", "Event", new { id = _event.Id })" class="btn btn-danger btn-sm">Delete</a>
+                <form method="post" action="/Event/Register">
+                    <input type="hidden" name="eventId" value="@_event.Id" />
+                    <button type="submit">Register</button>
+                </form>
             </td>
         </tr>
     }

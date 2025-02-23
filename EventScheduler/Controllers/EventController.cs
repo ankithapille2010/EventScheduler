@@ -2,7 +2,9 @@
 using AspNetCoreGeneratedDocument;
 using EventScheduler.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace EventScheduler.Controllers
 {
@@ -10,8 +12,13 @@ namespace EventScheduler.Controllers
     public class EventController : Controller
     {   
         private readonly IEvent _event;
-        public EventController(IEvent __event) { 
+        private readonly IEventRegistration _eventRegistration;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public EventController(IEvent __event, UserManager<ApplicationUser> userManager, IEventRegistration eventRegistration) { 
             _event = __event;
+            _userManager = userManager;
+            _eventRegistration = eventRegistration;
         }
         public IActionResult Index()
         {
@@ -32,7 +39,7 @@ namespace EventScheduler.Controllers
             return RedirectToAction("Index");
         }
 
-        //[HttpGet]
+        [HttpGet]
         public IActionResult Edit(int id) { 
             var ev = _event.GetEvent(id);
             return View(ev);
@@ -46,12 +53,31 @@ namespace EventScheduler.Controllers
             _event.EditEvent(ev);
             return RedirectToAction("Index");
         }
-        //[HttpGet]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             _event.DeleteEvent(id);
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<IActionResult> Register(int eventId)
+        {
+            var _userId = _userManager.GetUserId(User);
+            if (string.IsNullOrEmpty(_userId))
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            await _eventRegistration.RegisterForEventAsync(_userId, eventId);
+            return RedirectToAction("Index");
+            
+        }
+        [Authorize]
+        public async Task<IActionResult> MyEvents()
+        {
+            var userId = _userManager.GetUserId(User);
+            var registeredEvents = await _eventRegistration.GetUserRegisteredEventsAsync(userId);
 
+            return View(registeredEvents);
+        }
     }
 }

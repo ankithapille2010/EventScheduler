@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace EventScheduler.Models
+namespace EventScheduler.Models.Authorization
 {
     public class RegisterViewModel
     {
