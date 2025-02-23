@@ -1,0 +1,29 @@
+﻿@model EventScheduler.Models.RegisterViewModel
+@{
+   <h1>Register</h1>
+   <form asp-action="Register" method="post">
+	    <div>
+			<label asp-for="Email"> Email</label>
+			<input type="email" asp-for="Email">
+		</div>
+		<div>
+			<label asp-for="Password"> Password</label>
+			<input type="password" asp-for="Password">
+		</div>
+		<div>
+			<label asp-for="ConfirmPassword">Confirm Password</label>
+			<input type="password" asp-for="ConfirmPassword">
+		</div>
+		<div>
+			<label asp-for="FullName">Full Name</label>
+			<input type="text" asp-for="FullName">
+		</div>
+		<div>
+			<label for="Role">Select Role</label>
+			<select asp-for="Role" asp-items="Model.Roles" class="form-control">
+				<option value="">-- Select Role --</option>
+			</select>
+		</div>
+		<button type="submit" class="btn btn-primary">Register</button>
+	</form>
+}

@@ -1,10 +1,12 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 using AspNetCoreGeneratedDocument;
 using EventScheduler.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventScheduler.Controllers
 {
+  //  [Authorize] // Protects all actions with JWT authentication
     public class EventController : Controller
     {   
         private readonly IEvent _event;
@@ -16,6 +18,7 @@ namespace EventScheduler.Controllers
             List<Event> EventList= _event.GetEvents().ToList();
             return View(EventList);
         }
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -29,7 +32,7 @@ namespace EventScheduler.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        //[HttpGet]
         public IActionResult Edit(int id) { 
             var ev = _event.GetEvent(id);
             return View(ev);
@@ -43,7 +46,7 @@ namespace EventScheduler.Controllers
             _event.EditEvent(ev);
             return RedirectToAction("Index");
         }
-        [HttpGet]
+        //[HttpGet]
         public IActionResult Delete(int id)
         {
             _event.DeleteEvent(id);
