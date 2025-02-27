@@ -16,6 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IEvent, Event>();
 builder.Services.AddScoped<IEventRegistration, EventRegistrationRegistry>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 // Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()

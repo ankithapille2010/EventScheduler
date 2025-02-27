@@ -18,5 +18,9 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    background-image: url('/images/background.jpg');
+    background-size: cover; /* Ensures the image covers the entire screen */
+    background-position: center; /* Keeps the image centered */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    color: #fff; /* Ensures text is readable if needed */
 }

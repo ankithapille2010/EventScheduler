@@ -1,6 +1,6 @@
 ﻿namespace EventScheduler.Models
 {
-    public class EventRegistration1
+    public class EventRegistration
     {
         public int Id { get; set; }
         public int EventId { get; set; }

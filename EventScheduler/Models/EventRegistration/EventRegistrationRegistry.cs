@@ -19,7 +19,7 @@ namespace EventScheduler.Models
 
         public async Task RegisterForEventAsync(string userId, int eventId)
         {
-            var registration = new EventRegistration1
+            var registration = new EventRegistration
             {
                 UserId = userId,
                 EventId = eventId

@@ -13,7 +13,7 @@ namespace EventScheduler.Models
         public string? Title { get; set; }
 
         // Navigation property for registrations
-        public ICollection<EventRegistration1> EventRegistrations { get; set; }
+        public ICollection<EventRegistration> EventRegistrations { get; set; }
 
         public Event(ApplicationDbContext context)
         {
