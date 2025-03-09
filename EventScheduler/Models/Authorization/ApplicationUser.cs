@@ -10,4 +10,5 @@ public class ApplicationUser : IdentityUser
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public ICollection<EventRegistration> EventRegistrations { get; set; }
+
 }

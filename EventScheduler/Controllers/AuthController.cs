@@ -41,9 +41,7 @@ namespace EventScheduler.Controllers
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
+        {            
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FullName = model.FullName };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -53,10 +51,9 @@ namespace EventScheduler.Controllers
                     return RedirectToAction("Login");
                 }
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
             }
             return View(model);
         }
@@ -80,7 +77,6 @@ namespace EventScheduler.Controllers
                 {
                     return RedirectToLocal(returnUrl);
                 }
-
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
 

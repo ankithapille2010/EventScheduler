@@ -1,0 +1,40 @@
+﻿@{
+    var isAdmin = ViewBag.IsAdmin;
+    var isUser = ViewBag.IsUser;
+    var IsOrganizer = ViewBag.IsOrganizer;
+}
+@model List<EventScheduler.Models.Event>
+
+<h2>Event List</h2>
+
+<table class="table-striped table-borderless" style="max-width: 70%" cellpadding="10">
+    <thead style="background-color: #ff5733; color: white;">
+        <tr>
+            <th>Event</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var _event in Model)
+        {
+            <tr>
+                <td>@_event.Title</td>
+                <td>@_event.Date</td>
+                <td>
+                    @if (IsOrganizer)
+                    { 
+                        <a href="@Url.Action("Edit", "Event", new { id = _event.Id })" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="@Url.Action("Delete", "Event", new { id = _event.Id })" class="btn btn-danger btn-sm">Delete</a>
+                    }
+                    @if(isUser)
+                    { 
+                        <form method="post" action="/Event/Register">
+                            <input type="hidden" name="eventId" value="@_event.Id" />
+                            <button type="submit">Register</button>
+                        </form>
+                    } 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

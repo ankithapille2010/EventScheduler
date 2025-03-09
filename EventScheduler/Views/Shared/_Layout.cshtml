@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -19,14 +22,28 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">                       
-                        <li class="nav-item">
-                            <form method="post" action="@Url.Action("Logout", "Auth")">
-                                <button type="submit">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                    <form method="post" action="@Url.Action("AllEvents", "Event")">
+                        <button type="submit" class="btn btn-dark">All Events</button>
+                    </form>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        var user = await UserManager.GetUserAsync(User);
+                        <li>Welcome, @user?.FullName!</li>
+                        <form class="logoutbutton" method="post" action="@Url.Action("Logout", "Auth")">
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form method="get" action="@Url.Action("Login", "Auth")">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                        <form method="get" action="@Url.Action("Register", "Auth")">
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </form>
+                    }
+                   
                 </div>
             </div>
         </nav>

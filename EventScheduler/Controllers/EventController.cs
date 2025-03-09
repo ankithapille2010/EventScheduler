@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 
 namespace EventScheduler.Controllers
 {
-  //  [Authorize] // Protects all actions with JWT authentication
     public class EventController : Controller
     {   
         private readonly IEvent _event;
@@ -22,8 +21,8 @@ namespace EventScheduler.Controllers
         }
         public IActionResult Index()
         {
-            List<Event> EventList= _event.GetEvents().ToList();
-            return View(EventList);
+           List<Event> EventList= _event.GetEvents().ToList();
+           return View(EventList);
         }
         [Authorize]
         public IActionResult Create()
@@ -78,6 +77,17 @@ namespace EventScheduler.Controllers
             var registeredEvents = await _eventRegistration.GetUserRegisteredEventsAsync(userId);
 
             return View(registeredEvents);
+        }
+        [HttpPost]
+        public IActionResult AllEvents()
+        {
+           
+            ViewBag.isAdmin = User.IsInRole("Admin");
+            ViewBag.IsUser = User.IsInRole("User");
+            ViewBag.IsOrganizer = User.IsInRole("Organizer");
+                
+            List<Event> EventList = _event.GetEvents().ToList();
+            return View(EventList);
         }
     }
 }
