@@ -2,28 +2,49 @@
 @{
    <h1>Register</h1>
    <form asp-action="Register" method="post">
-	    <div>
-			<label asp-for="Email"> Email</label>
-			<input type="email" asp-for="Email">
-		</div>
-		<div>
-			<label asp-for="Password"> Password</label>
-			<input type="password" asp-for="Password">
-		</div>
-		<div>
-			<label asp-for="ConfirmPassword">Confirm Password</label>
-			<input type="password" asp-for="ConfirmPassword">
-		</div>
-		<div>
-			<label asp-for="FullName">Full Name</label>
-			<input type="text" asp-for="FullName">
-		</div>
-		<div>
-			<label for="Role">Select Role</label>
-			<select asp-for="Role" asp-items="Model.Roles" class="form-control">
-				<option value="">-- Select Role --</option>
-			</select>
-		</div>
-		<button type="submit" class="btn btn-primary">Register</button>		
+		<table style="border-collapse:separate; border-spacing: 10px 10px; width: 50%;">
+			<tr>
+				<th class="mb-3 thead">
+					<label asp-for="Email"> Email</label>
+				</th>
+				<td class="mb-3 create_td">
+					<input type="email" class="create_td" asp-for="Email">
+				</td>
+			</tr>
+			<tr>
+				<th class="mb-3 thead">
+					<label asp-for="Password" class="mb-3 thead"> Password</label>
+				</th>
+				<td class="mb-3 thead">
+					<input type="password" asp-for="Password">
+				</td>
+			</tr>
+			<tr>
+				<th class="mb-3 thead">
+					<label asp-for="ConfirmPassword" class="mb-3 thead">Confirm Password</label>
+				</th>
+				<td>
+					<input type="password" asp-for="ConfirmPassword">
+				</td>			
+			</tr>
+			<tr>
+				<th class="mb-3 thead">
+					<label asp-for="FullName" class="mb-3 thead">Full Name</label>
+				</th>
+				<td><input type="text" asp-for="FullName"></td>
+				
+			</tr>
+			<tr>
+				<th class="mb-3 thead">
+					<label for="Role" class="mb-3 thead">Select Role</label>
+				</th>
+				<td>
+					<select asp-for="Role" asp-items="Model.Roles" class="form-control">
+						<option value="">-- Select Role --</option>
+					</select>
+				</td>				
+			</tr>
+			<button type="submit" class="btn btn-primary">Register</button>		
+		</table>
 	</form>
 }

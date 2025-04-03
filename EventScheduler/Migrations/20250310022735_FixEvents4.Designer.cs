@@ -3,6 +3,7 @@ using System;
 using EventScheduler.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventScheduler.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250310022735_FixEvents4")]
+    partial class FixEvents4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
@@ -99,16 +102,10 @@ namespace EventScheduler.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Duration")
+                    b.Property<int>("Duration")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("EventDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("OrganizerId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("OrganizerName")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Time")
@@ -277,7 +274,7 @@ namespace EventScheduler.Migrations
             modelBuilder.Entity("EventScheduler.Models.EventRegistration", b =>
                 {
                     b.HasOne("EventScheduler.Models.Event", "Event")
-                        .WithMany("EventRegistrations")
+                        .WithMany()
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -345,11 +342,6 @@ namespace EventScheduler.Migrations
                 });
 
             modelBuilder.Entity("ApplicationUser", b =>
-                {
-                    b.Navigation("EventRegistrations");
-                });
-
-            modelBuilder.Entity("EventScheduler.Models.Event", b =>
                 {
                     b.Navigation("EventRegistrations");
                 });

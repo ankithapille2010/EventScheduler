@@ -24,3 +24,16 @@ body {
     background-repeat: no-repeat; /* Prevents the image from repeating */
     color: #fff; /* Ensures text is readable if needed */
 }
+
+
+.thead {
+    width: 30%; /* Control the width of the header */
+    background-color: #ff5733;
+    color: white;
+    border-bottom-color: white;
+    border-bottom-width: 2px;
+}
+
+.create_td {
+    width: 100%; /* Makes inputs and selects fill the entire width of the cell */
+}

@@ -21,21 +21,48 @@ namespace EventScheduler.Controllers
         }
         public IActionResult Index()
         {
-           List<Event> EventList= _event.GetEvents().ToList();
-           return View(EventList);
+           return View();
         }
+        
         [Authorize]
         public IActionResult Create()
         {
-            return View();
+           // Create a new Event instance and set TimeSlots
+            var model = new Event
+            {
+                TimeSlots = GenerateTimeSlots() // Assign the generated time slots
+            };
+            return View(model);
+        }
+        //Generate all the timeslots for 15 minute interval 
+        private List<string> GenerateTimeSlots()
+        {
+            var times = new List<string>();
+
+            for (int hour = 0; hour < 24; hour++) 
+            {
+                for (int minute = 0; minute < 60; minute += 15) // 15-minute intervals
+                {
+                    times.Add(new DateTime(1, 1, 1, hour, minute, 0).ToString("hh:mm tt")); // 12-hour format
+                }
+            }
+
+            return times;
         }
         [HttpPost]
-        public IActionResult Create(Event ev)
+        public async Task<IActionResult> Create(Event ev)
         {
-            if (!ModelState.IsValid)
-                return View();
+            if (!ModelState.IsValid) {
+                ev.TimeSlots = GenerateTimeSlots(); // Ensure the dropdown has values after validation fails
+                return View(ev);
+            }
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return Unauthorized();
+            ev.OrganizerId = user.UserName;
+            ev.OrganizerName = user.FullName;
             _event.CreateEvent(ev);
-            return RedirectToAction("Index");
+            return RedirectToAction("AllEvents");
         }
 
         [HttpGet]
@@ -50,13 +77,13 @@ namespace EventScheduler.Controllers
                 return View(ev);
             }
             _event.EditEvent(ev);
-            return RedirectToAction("Index");
+            return RedirectToAction("AllEvents");
         }
         [HttpGet]
         public IActionResult Delete(int id)
         {
             _event.DeleteEvent(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("AllEvents");
         }
         [HttpPost]
         public async Task<IActionResult> Register(int eventId)
@@ -67,7 +94,7 @@ namespace EventScheduler.Controllers
                 return RedirectToAction("Login", "Auth");
             }
             await _eventRegistration.RegisterForEventAsync(_userId, eventId);
-            return RedirectToAction("Index");
+            return RedirectToAction("Login","Auth");
             
         }
         [Authorize]
@@ -78,13 +105,18 @@ namespace EventScheduler.Controllers
 
             return View(registeredEvents);
         }
-        [HttpPost]
-        public IActionResult AllEvents()
+        
+        public async Task<IActionResult> AllEvents()
         {
            
             ViewBag.isAdmin = User.IsInRole("Admin");
             ViewBag.IsUser = User.IsInRole("User");
             ViewBag.IsOrganizer = User.IsInRole("Organizer");
+            var user= await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                ViewBag.OrganizerName = user.FullName;
+            }
                 
             List<Event> EventList = _event.GetEvents().ToList();
             return View(EventList);

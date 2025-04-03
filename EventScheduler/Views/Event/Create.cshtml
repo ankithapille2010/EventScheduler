@@ -3,17 +3,54 @@
 <h1>Create New Event</h1>
 
 <form asp-action="Create" method="post">
-    <div class="mb-3">
-        <label for="Title" class="form-label">Event Name</label>
-        <input type="text" asp-for="Title"/>
-    </div>
-
-    <div class="mb-3">
-        <label for="Date" class="form-label">Event Date</label>
-        <input type="date" asp-for="Date" />
-    </div>
-
+    <table style="border-collapse:separate; border-spacing: 10px 10px; width: 50%;">
+        <tr>
+            <th class="mb-3 thead" >
+                <label for="Title" class="form-label">Event</label>
+            </th>
+            <td class="mb-3 create_td">
+                <input type="text"  class ="create_td" asp-for="Title"/>
+            </td>
+        </tr>
+        <tr>
+            <th class="mb-3 thead">
+                <label for="Description" class="form-label">Description</label>
+            </th>
+            <td class="mb-3 create_td">
+                <input type="text" class = "create_td" asp-for="Description" />
+            </td>
+        </tr>
+        <tr>
+            <th class="mb-3 thead">
+                <label for="EventDate" class="form-label">Event Date</label>
+            </th>
+            <td class="mb-3 create_td">
+                <input type="date" class="create_td" value="@DateTime.Now.ToString("yyyy-MM-dd") asp-for="EventDate" />               
+            </td>
+       </tr>
+        <tr>          
+            <th class="mb-3 thead">
+                <label for="Time">Select Time</label>
+            </th>
+            <td class="mb-3 create_td">
+                <select asp-for="Time" class="create_td">
+                    @foreach (var time in Model.TimeSlots)
+                    {
+                        <option value="@time">@time</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th class="mb-3 thead">
+                <label for="Duration" class="form-label">Duration(Hour/s) </label>
+            </th>
+            <td class="mb-3 create_td">
+                <input type="text" class="create_td" asp-for="Duration" />
+            </td>
+        </tr>  
+    </table>
     <button type="submit" class="btn btn-primary">Create Event</button>
-    <a href="@Url.Action("Index", "Event")" class="btn btn-secondary">Back to List</a>
+    <a href="@Url.Action("AllEvents", "Event")" class="btn btn-secondary">Back to List</a>
 
 </form>

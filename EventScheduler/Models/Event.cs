@@ -1,6 +1,9 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EventScheduler.Models
 {
@@ -9,17 +12,29 @@ namespace EventScheduler.Models
         private readonly ApplicationDbContext _context;
         [Key]
         public int Id { get; set; }
-        public DateTime Date { get; set; }
-        public string? Title { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public DateTime EventDate { get; set; }
+        public string Time { get; set; }
+        public int? Duration { get; set; }
+
+        public string? OrganizerId { get; set; }
+
+        public string? OrganizerName {get; set;}
 
         // Navigation property for registrations
-        public ICollection<EventRegistration> EventRegistrations { get; set; }
+        public ICollection<EventRegistration> EventRegistrations { get; set; } = new List<EventRegistration>();
+        [NotMapped]
+        public List<string> TimeSlots { get; set; } = new List<string>();// Dropdown data
 
         public Event(ApplicationDbContext context)
         {
             _context = context;
+            
         }
-        public Event() { }
+        public Event() {
+           
+        }
         void IEvent.CreateEvent(Event _event)
         {
             _context.Add(_event);
