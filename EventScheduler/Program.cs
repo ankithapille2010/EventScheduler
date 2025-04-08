@@ -60,7 +60,9 @@ app.MapControllerRoute(
     pattern: "{controller=Event}/{action=Index}/{id?}");
 
 using (var scope = app.Services.CreateScope())
-{
+{   
+    //var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    //context.Database.Migrate();
     var services = scope.ServiceProvider;
     await RoleSeeder.SeedRoles(services);
 }
